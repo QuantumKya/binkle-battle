@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://qw14lrewp46x"]
+
+[ext_resource type="Script" uid="uid://chlkutanoisqr" path="res://get_hit_box.gd" id="1_i431l"]
+[ext_resource type="Texture2D" uid="uid://dowc7ylgm5u71" path="res://sprites/rocketnose.png" id="1_ip7xm"]
+[ext_resource type="Script" uid="uid://f1u3uadljuqk" path="res://character_body_3d.gd" id="1_oxp8w"]
+[ext_resource type="Script" uid="uid://o11q1grubt74" path="res://debug_text.gd" id="3_7sfm4"]
+
+[sub_resource type="Environment" id="Environment_oxp8w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxp8w"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oxp8w"]
+size = Vector3(1, 1, 0.01)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oxp8w"]
+radius = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7sfm4"]
+albedo_color = Color(0, 0.367651, 0.748081, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i431l"]
+material = SubResource("StandardMaterial3D_7sfm4")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6t8i5"]
+size = Vector3(6, 0.5, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oxp8w")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.5, -0.836516, 0.224144, 0, 0.258819, 0.965926, -0.866025, -0.482963, 0.12941, 0, 18.9608, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.6, 5.6)
+
+[node name="GetHitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)
+collision_layer = 2
+collision_mask = 6
+script = ExtResource("1_i431l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GetHitBox"]
+shape = SubResource("CapsuleShape3D_oxp8w")
+debug_color = Color(0.929412, 0, 0.658824, 0.788235)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_oxp8w")
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
+pixel_size = 0.0156
+texture = ExtResource("1_ip7xm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_oxp8w")
+
+[node name="AttackTimer" type="Timer" parent="CharacterBody3D"]
+wait_time = 0.6
+
+[node name="AttackHitbox" type="Area3D" parent="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/AttackHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+shape = SubResource("SphereShape3D_oxp8w")
+debug_color = Color(0.807843, 0.411765, 0, 1)
+
+[node name="GetHitBox" type="Area3D" parent="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/GetHitBox"]
+shape = SubResource("CapsuleShape3D_oxp8w")
+debug_color = Color(0.929412, 0, 0.658824, 0.788235)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+gravity_scale = 0.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(6, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_i431l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_6t8i5")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 400.0
+offset_bottom = 160.0
+script = ExtResource("3_7sfm4")
+
+[connection signal="area_entered" from="GetHitBox" to="GetHitBox" method="_on_area_entered"]
+[connection signal="timeout" from="CharacterBody3D/AttackTimer" to="CharacterBody3D" method="_on_attack_timer_timeout"]
