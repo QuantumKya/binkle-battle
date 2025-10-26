@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://qw14lrewp46x"]
+[gd_scene load_steps=12 format=3 uid="uid://qw14lrewp46x"]
 
 [ext_resource type="Script" uid="uid://dgcyjeqyg57y8" path="res://player_manager.gd" id="1_6t8i5"]
 [ext_resource type="Texture2D" uid="uid://dowc7ylgm5u71" path="res://sprites/rocketnose.png" id="1_ip7xm"]
 [ext_resource type="Script" uid="uid://f1u3uadljuqk" path="res://player.gd" id="1_oxp8w"]
-[ext_resource type="Script" uid="uid://cl3oyn5bqf4uc" path="res://player_dummy.gd" id="3_6t8i5"]
 [ext_resource type="Script" uid="uid://o11q1grubt74" path="res://debug_text.gd" id="3_7sfm4"]
 
 [sub_resource type="Environment" id="Environment_oxp8w"]
@@ -11,8 +10,6 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxp8w"]
 radius = 0.3
 height = 1.0
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6t8i5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oxp8w"]
 size = Vector3(1, 1, 0.01)
@@ -48,85 +45,69 @@ script = ExtResource("3_7sfm4")
 [node name="PlayerManager" type="Node" parent="."]
 script = ExtResource("1_6t8i5")
 
-[node name="DummyPlayer2" type="Area3D" parent="." node_paths=PackedStringArray("player_manager")]
+[node name="GetHitBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)
 collision_layer = 8
 collision_mask = 0
 monitoring = false
-script = ExtResource("3_6t8i5")
-player_manager = NodePath("../PlayerManager")
-player_id = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DummyPlayer2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GetHitBox"]
 shape = SubResource("CapsuleShape3D_oxp8w")
 debug_color = Color(0.929412, 0, 0.658824, 0.67451)
 
-[node name="DummyPlayer3" type="Area3D" parent="." node_paths=PackedStringArray("player_manager")]
+[node name="GetHitBox2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, 0)
 collision_layer = 16
 collision_mask = 0
 monitoring = false
-script = ExtResource("3_6t8i5")
-player_manager = NodePath("../PlayerManager")
-player_id = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DummyPlayer3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GetHitBox2"]
 shape = SubResource("CapsuleShape3D_oxp8w")
 debug_color = Color(0.929412, 0, 0.658824, 0.67451)
 
-[node name="DummyPlayer4" type="Area3D" parent="." node_paths=PackedStringArray("player_manager")]
+[node name="GetHitBox3" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, 0)
 collision_layer = 32
 collision_mask = 0
 monitoring = false
-script = ExtResource("3_6t8i5")
-player_manager = NodePath("../PlayerManager")
-player_id = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DummyPlayer4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GetHitBox3"]
 shape = SubResource("CapsuleShape3D_oxp8w")
 debug_color = Color(0.929412, 0, 0.658824, 0.67451)
 
-[node name="DummyAttack" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DummyAttack"]
-shape = SubResource("SphereShape3D_6t8i5")
-debug_color = Color(0.815686, 0.407843, 0, 0.643137)
-
-[node name="Player 1" type="CharacterBody3D" parent="." node_paths=PackedStringArray("player_manager")]
+[node name="Player0" type="CharacterBody3D" parent="." node_paths=PackedStringArray("player_manager")]
 script = ExtResource("1_oxp8w")
 player_manager = NodePath("../PlayerManager")
 
-[node name="Sprite3D" type="Sprite3D" parent="Player 1"]
+[node name="Sprite3D" type="Sprite3D" parent="Player0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 pixel_size = 0.0156
 texture = ExtResource("1_ip7xm")
 
-[node name="PhysBox" type="CollisionShape3D" parent="Player 1"]
+[node name="PhysBox" type="CollisionShape3D" parent="Player0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_oxp8w")
 
-[node name="AttackTimer" type="Timer" parent="Player 1"]
+[node name="AttackTimer" type="Timer" parent="Player0"]
 wait_time = 0.6
 
-[node name="AttackHitbox" type="Area3D" parent="Player 1"]
+[node name="AttackHitbox" type="Area3D" parent="Player0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 2
 collision_mask = 8
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player 1/AttackHitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player0/AttackHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
 shape = SubResource("SphereShape3D_oxp8w")
 debug_color = Color(0.807843, 0.411765, 0, 0.690196)
 
-[node name="GetHitBox" type="Area3D" parent="Player 1"]
+[node name="GetHitBox" type="Area3D" parent="Player0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player 1/GetHitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player0/GetHitBox"]
 shape = SubResource("CapsuleShape3D_oxp8w")
 debug_color = Color(0.929412, 0, 0.658824, 0.67451)
 
@@ -141,4 +122,4 @@ mesh = SubResource("BoxMesh_i431l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 shape = SubResource("BoxShape3D_6t8i5")
 
-[connection signal="timeout" from="Player 1/AttackTimer" to="Player 1" method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="Player0/AttackTimer" to="Player0" method="_on_attack_timer_timeout"]

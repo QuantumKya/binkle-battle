@@ -1,16 +1,13 @@
 extends Area3D
 
+@export var player_manager: Node
+@export var player_id: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	player_manager.add_player(player_id, self, $"../DummyAttack")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
-func _on_area_entered(area: Area3D) -> void:
-	if area.collision_layer & (1 << 2):
-		Globals.log("Hit the enemy!")
