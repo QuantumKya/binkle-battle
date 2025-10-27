@@ -15,7 +15,9 @@ var attacking: bool = false
 
 
 func _ready() -> void:
-	player_manager.add_player(player_id, gethit_hitbox, attack_hitbox)
+	player_manager.add_player(player_id)
+	player_manager.init_hitbox(player_id, gethit_hitbox)
+	player_manager.init_attack(player_id, attack_hitbox)
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("attack1") && not attacking:

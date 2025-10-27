@@ -3,9 +3,13 @@ extends Area3D
 @export var player_manager: Node
 @export var player_id: int
 
+@export var health: int = 50;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player_manager.add_player(player_id, self, $"../DummyAttack")
+	player_manager.add_player(player_id)
+	player_manager.init_hitbox(self)
+	player_manager.init_attack($"../DummyAttack")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

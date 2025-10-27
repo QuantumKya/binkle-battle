@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://qw14lrewp46x"]
+[gd_scene load_steps=15 format=3 uid="uid://qw14lrewp46x"]
 
 [ext_resource type="Script" uid="uid://dgcyjeqyg57y8" path="res://player_manager.gd" id="1_6t8i5"]
 [ext_resource type="Texture2D" uid="uid://dowc7ylgm5u71" path="res://sprites/rocketnose.png" id="1_ip7xm"]
 [ext_resource type="Script" uid="uid://f1u3uadljuqk" path="res://player.gd" id="1_oxp8w"]
+[ext_resource type="Texture2D" uid="uid://4obbydbllkys" path="res://sprites/ui/player_healthbar.png" id="2_dw4jg"]
 [ext_resource type="Script" uid="uid://cl3oyn5bqf4uc" path="res://player_dummy.gd" id="3_6t8i5"]
 [ext_resource type="Script" uid="uid://o11q1grubt74" path="res://debug_text.gd" id="3_7sfm4"]
 
@@ -45,8 +46,34 @@ offset_right = 400.0
 offset_bottom = 160.0
 script = ExtResource("3_7sfm4")
 
-[node name="PlayerManager" type="Node" parent="."]
+[node name="PlayerUI" type="HBoxContainer" parent="."]
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -508.0
+offset_top = -116.0
+offset_right = 509.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Control" type="Control" parent="PlayerUI"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerUI/Control"]
+scale = Vector2(4, 4)
+texture = ExtResource("2_dw4jg")
+offset = Vector2(0, 12)
+
+[node name="Sprite2D2" type="Sprite2D" parent="PlayerUI/Control"]
+
+[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("player_ui")]
 script = ExtResource("1_6t8i5")
+player_ui = NodePath("../PlayerUI")
 
 [node name="DummyPlayer2" type="Area3D" parent="." node_paths=PackedStringArray("player_manager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)

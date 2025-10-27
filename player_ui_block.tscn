@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvoiyxtggrmli"]
+
+[ext_resource type="Texture2D" uid="uid://blva1hd3giotk" path="res://sprites/ui/healthbar_inside.png" id="1_6h6yc"]
+[ext_resource type="Script" uid="uid://cbij55rfr1p56" path="res://player_ui_block.gd" id="1_vvl0s"]
+[ext_resource type="Texture2D" uid="uid://4obbydbllkys" path="res://sprites/ui/player_healthbar.png" id="2_vvl0s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(4, 4)
+script = ExtResource("1_vvl0s")
+
+[node name="PlayerText" type="Sprite2D" parent="."]
+offset = Vector2(0, 12)
+
+[node name="HealthBar" type="Sprite2D" parent="."]
+texture = ExtResource("1_6h6yc")
+offset = Vector2(0, 12)
+
+[node name="HealthOutline" type="Sprite2D" parent="."]
+texture = ExtResource("2_vvl0s")
+offset = Vector2(0, 12)
