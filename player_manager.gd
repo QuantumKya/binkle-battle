@@ -2,6 +2,7 @@ extends Node
 class_name PlayerManager
 
 @export var player_ui: HBoxContainer
+const player_ui_block = preload("res://player_ui_block.tscn")
 
 var player_count: int = 0
 var player_states: Dictionary = {}
@@ -20,6 +21,12 @@ func add_player(player_id: int) -> void:
 		"wins": 0,
 		"losses": 0,
 	}
+	
+	var pui: Control = player_ui_block.instantiate()
+	pui.set_size(Vector2(4, 4))
+	pui.name = "Player " + str(player_id + 1)
+	pui.player_number = player_id + 1
+	player_ui.add_child(pui)
 
 func init_attack(player_id: int, attackbox: Area3D) -> void:
 	var hitmask := 0
@@ -42,14 +49,15 @@ func decode_player_mask(pmask: int) -> Array[int]:
 func deal_damage(dealer_id: int, recipient_id: int, damage: int) -> void:
 	player_states[recipient_id].health -= damage
 	if player_states[recipient_id].health <= 0:
+		player_states[recipient_id].health = 0
 		player_states[dealer_id].wins += 1
 		player_states[recipient_id].losses += 1
+	player_ui.find_child("Player " + str(recipient_id + 1)).set_health_value(player_states[recipient_id].health / player_health)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in player_count:
-		pass
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

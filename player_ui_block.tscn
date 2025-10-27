@@ -4,19 +4,34 @@
 [ext_resource type="Script" uid="uid://cbij55rfr1p56" path="res://player_ui_block.gd" id="1_vvl0s"]
 [ext_resource type="Texture2D" uid="uid://4obbydbllkys" path="res://sprites/ui/player_healthbar.png" id="2_vvl0s"]
 
-[node name="Control" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="Control" type="AspectRatioContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -12.0
+offset_right = 16.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(4, 4)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+ratio = 1.3333
 script = ExtResource("1_vvl0s")
 
-[node name="PlayerText" type="Sprite2D" parent="."]
-offset = Vector2(0, 12)
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+texture_progress = ExtResource("1_6h6yc")
 
-[node name="HealthBar" type="Sprite2D" parent="."]
-texture = ExtResource("1_6h6yc")
-offset = Vector2(0, 12)
-
-[node name="HealthOutline" type="Sprite2D" parent="."]
+[node name="HealthOutline" type="TextureRect" parent="."]
+layout_mode = 2
 texture = ExtResource("2_vvl0s")
-offset = Vector2(0, 12)
+
+[node name="PlayerText" type="TextureRect" parent="."]
+layout_mode = 2

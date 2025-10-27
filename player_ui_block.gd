@@ -7,6 +7,9 @@ func _ready() -> void:
 	var fname = "res://sprites/ui/p" + str(player_number) + ".png"
 	$PlayerText.texture = load(fname)
 
+func set_health_value(val: float) -> void:
+	$AspectRatioContainer/HealthBar.value = val
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
