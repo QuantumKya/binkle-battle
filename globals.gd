@@ -9,8 +9,8 @@ func _ready() -> void:
 func register_debug_label(label: RichTextLabel) -> void:
 	debug_text = label
 
-func log(message: String) -> void:
+func log(message: Variant) -> void:
 	if debug_text:
-		debug_text.log(message)
+		debug_text.log(str(message))
 	else:
 		push_warning("Debug label not added yet!")

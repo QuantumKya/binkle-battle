@@ -4,8 +4,8 @@ class_name Player
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-const player_id: int = 0
-@export var player_manager: Node
+@export var player_id: int = 0
+@export var player_manager: PlayerManager
 
 var attacking: bool = false
 @onready var attack_timer = $AttackTimer
@@ -59,10 +59,14 @@ func hit_check() -> int:
 	for area in attack_hitbox.get_overlapping_areas():
 		mask |= (area.collision_layer >> 2)
 	
-	if mask != 0:
-		var hit_players = player_manager.decode_player_mask(mask)
-		Globals.log("Players hit: ")
-		Globals.log(str(hit_players.map(func(a): return a+1)))
+	if mask == 0: return 0
+	
+	var hit_players = player_manager.decode_player_mask(mask)
+	Globals.log("Players hit: ")
+	Globals.log(str(hit_players.map(func(a): return a+1)))
+	for target in hit_players:
+		player_manager.deal_damage(player_id, target, 10)
+	
 	return mask
 
 func set_flip(scl: float):

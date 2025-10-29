@@ -50,7 +50,7 @@ script = ExtResource("3_7sfm4")
 
 [node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("player_ui")]
 script = ExtResource("1_6t8i5")
-player_ui = NodePath("")
+player_ui = NodePath("../PlayerUI")
 
 [node name="DummyPlayer2" type="Area3D" parent="." node_paths=PackedStringArray("player_manager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)

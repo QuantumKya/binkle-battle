@@ -1,8 +1,7 @@
 extends Node
 class_name PlayerManager
 
-@export var player_ui: HBoxContainer
-const player_ui_block = preload("res://player_ui_block.tscn")
+@export var player_ui: Control
 
 var player_count: int = 0
 var player_states: Dictionary = {}
@@ -22,11 +21,7 @@ func add_player(player_id: int) -> void:
 		"losses": 0,
 	}
 	
-	var pui: Control = player_ui_block.instantiate()
-	pui.set_size(Vector2(4, 4))
-	pui.name = "Player " + str(player_id + 1)
-	pui.player_number = player_id + 1
-	player_ui.add_child(pui)
+	player_ui.add_player(player_id)
 
 func init_attack(player_id: int, attackbox: Area3D) -> void:
 	var hitmask := 0
@@ -48,11 +43,14 @@ func decode_player_mask(pmask: int) -> Array[int]:
 
 func deal_damage(dealer_id: int, recipient_id: int, damage: int) -> void:
 	player_states[recipient_id].health -= damage
+	Globals.log("Player " + str(dealer_id) + " hit Player " + str(recipient_id) + ", dealing " + str(damage) + " damage!")
+	Globals.log("Player " + str(recipient_id) + " left with " + str(player_states[recipient_id].health) + " health.")
 	if player_states[recipient_id].health <= 0:
 		player_states[recipient_id].health = 0
-		player_states[dealer_id].wins += 1
-		player_states[recipient_id].losses += 1
-	player_ui.find_child("Player " + str(recipient_id + 1)).set_health_value(player_states[recipient_id].health / player_health)
+		player_scores[dealer_id].wins += 1
+		player_scores[recipient_id].losses += 1
+	var recip_health_percent: float = player_states[recipient_id].health / float(player_health)
+	player_ui.set_health_value(recipient_id, recip_health_percent)
 
 
 # Called when the node enters the scene tree for the first time.
